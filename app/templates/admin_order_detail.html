@@ -1,0 +1,41 @@
+{% extends "base.html" %}
+{% block title %}Order #{{ order.id }} - Admin{% endblock %}
+{% block content %}
+<h1 class="mb-4">Order #{{ order.id }}</h1>
+<div class="row g-4">
+    <div class="col-lg-8">
+        <div class="card shadow-sm">
+            <div class="card-header">Order Items</div>
+            <ul class="list-group list-group-flush">
+                {% for item in items %}
+                <li class="list-group-item d-flex justify-content-between">
+                    <span>{{ item.food_item.name }} x {{ item.quantity }}</span>
+                    <span>${{ "%.2f"|format(item.price * item.quantity) }}</span>
+                </li>
+                {% endfor %}
+            </ul>
+            <div class="card-footer text-end"><strong>Total: ${{ "%.2f"|format(order.total_amount) }}</strong></div>
+        </div>
+    </div>
+    <div class="col-lg-4">
+        <div class="card shadow-sm mb-3">
+            <div class="card-body">
+                <p><strong>Customer:</strong> {{ order.user.name }}</p>
+                <p><strong>Email:</strong> {{ order.user.email }}</p>
+                <p><strong>Date:</strong> {{ order.order_date.strftime('%B %d, %Y %I:%M %p') }}</p>
+            </div>
+        </div>
+        <div class="card shadow-sm">
+            <div class="card-header">Update Status</div>
+            <div class="card-body">
+                <form method="POST">
+                    {{ form.hidden_tag() }}
+                    {{ form.status(class="form-select mb-3") }}
+                    {{ form.submit(class="btn btn-danger w-100") }}
+                </form>
+            </div>
+        </div>
+        <a href="{{ url_for('admin.manage_orders') }}" class="btn btn-outline-secondary w-100 mt-3">Back</a>
+    </div>
+</div>
+{% endblock %}

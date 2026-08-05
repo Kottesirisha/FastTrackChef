@@ -1,0 +1,64 @@
+{% extends "base.html" %}
+{% block title %}Profile - FastTrackChef{% endblock %}
+
+{% block content %}
+<h1 class="mb-4"><i class="bi bi-person"></i> My Profile</h1>
+<div class="row g-4">
+    <div class="col-lg-6">
+        <div class="card shadow-sm">
+            <div class="card-header">Profile Information</div>
+            <div class="card-body">
+                <form method="POST" novalidate>
+                    {{ profile_form.hidden_tag() }}
+                    <div class="mb-3">
+                        {{ profile_form.name.label(class="form-label") }}
+                        {{ profile_form.name(class="form-control") }}
+                    </div>
+                    <div class="mb-3">
+                        {{ profile_form.email.label(class="form-label") }}
+                        {{ profile_form.email(class="form-control") }}
+                    </div>
+                    <div class="mb-3">
+                        {{ profile_form.phone.label(class="form-label") }}
+                        {{ profile_form.phone(class="form-control") }}
+                    </div>
+                    <div class="mb-3">
+                        {{ profile_form.address.label(class="form-label") }}
+                        {{ profile_form.address(class="form-control", rows=3) }}
+                    </div>
+                    <button type="submit" name="submit" value="Update Profile" class="btn btn-danger">Update Profile</button>
+                </form>
+            </div>
+        </div>
+    </div>
+    <div class="col-lg-6">
+        <div class="card shadow-sm">
+            <div class="card-header">Change Password</div>
+            <div class="card-body">
+                <form method="POST" novalidate>
+                    {{ password_form.hidden_tag() }}
+                    <div class="mb-3">
+                        {{ password_form.current_password.label(class="form-label") }}
+                        {{ password_form.current_password(class="form-control") }}
+                    </div>
+                    <div class="mb-3">
+                        {{ password_form.new_password.label(class="form-label") }}
+                        {{ password_form.new_password(class="form-control") }}
+                    </div>
+                    <div class="mb-3">
+                        {{ password_form.confirm_password.label(class="form-label") }}
+                        {{ password_form.confirm_password(class="form-control") }}
+                    </div>
+                    <button type="submit" name="submit" value="Change Password" class="btn btn-outline-danger">Change Password</button>
+                </form>
+            </div>
+        </div>
+        <div class="card shadow-sm mt-4">
+            <div class="card-body">
+                <p><strong>Role:</strong> {{ current_user.role|capitalize }}</p>
+                <p><strong>Member since:</strong> {{ current_user.created_at.strftime('%B %d, %Y') }}</p>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

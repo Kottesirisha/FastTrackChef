@@ -1,0 +1,74 @@
+{% extends "base.html" %}
+{% block title %}Cart - FastTrackChef{% endblock %}
+
+{% block content %}
+<h1 class="mb-4"><i class="bi bi-cart3"></i> Shopping Cart</h1>
+
+{% if cart_items %}
+<div class="table-responsive">
+    <table class="table table-hover align-middle">
+        <thead class="table-dark">
+            <tr>
+                <th>Item</th>
+                <th>Price</th>
+                <th>Quantity</th>
+                <th>Subtotal</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for entry in cart_items %}
+            <tr>
+                <td>
+                    <div class="d-flex align-items-center gap-3">
+                        <img src="{{ url_for('static', filename=entry.food.image_url) }}" class="cart-thumb rounded" alt="">
+                        <div>
+                            <strong>{{ entry.food.name }}</strong>
+                            <br><small class="text-muted">{{ entry.food.category.name }}</small>
+                        </div>
+                    </div>
+                </td>
+                <td>${{ "%.2f"|format(entry.food.price) }}</td>
+                <td>
+                    <form method="POST" action="{{ url_for('customer.update_cart', item_id=entry.item.id) }}" class="d-inline">
+                        <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+                        <input type="hidden" name="action" value="decrease">
+                        <button class="btn btn-sm btn-outline-secondary">-</button>
+                    </form>
+                    <span class="mx-2">{{ entry.item.quantity }}</span>
+                    <form method="POST" action="{{ url_for('customer.update_cart', item_id=entry.item.id) }}" class="d-inline">
+                        <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+                        <input type="hidden" name="action" value="increase">
+                        <button class="btn btn-sm btn-outline-secondary">+</button>
+                    </form>
+                </td>
+                <td><strong>${{ "%.2f"|format(entry.subtotal) }}</strong></td>
+                <td>
+                    <form method="POST" action="{{ url_for('customer.remove_from_cart', item_id=entry.item.id) }}">
+                        <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+                        <button class="btn btn-sm btn-outline-danger"><i class="bi bi-trash"></i></button>
+                    </form>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+        <tfoot>
+            <tr class="table-light">
+                <td colspan="3" class="text-end"><strong>Total</strong></td>
+                <td colspan="2"><strong class="price-tag">${{ "%.2f"|format(total) }}</strong></td>
+            </tr>
+        </tfoot>
+    </table>
+</div>
+<div class="d-flex gap-2">
+    <a href="{{ url_for('customer.menu') }}" class="btn btn-outline-secondary">Continue Shopping</a>
+    <a href="{{ url_for('customer.checkout') }}" class="btn btn-danger ms-auto">Proceed to Checkout</a>
+</div>
+{% else %}
+<div class="text-center py-5">
+    <i class="bi bi-cart-x display-1 text-muted"></i>
+    <p class="mt-3 text-muted">Your cart is empty.</p>
+    <a href="{{ url_for('customer.menu') }}" class="btn btn-danger">Browse Menu</a>
+</div>
+{% endif %}
+{% endblock %}

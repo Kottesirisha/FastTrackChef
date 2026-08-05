@@ -1,0 +1,98 @@
+:root {
+    --brand-red: #dc3545;
+    --brand-dark: #212529;
+}
+
+body {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    background-color: #f8f9fa;
+}
+
+main {
+    flex: 1;
+}
+
+.hero-section {
+    background: linear-gradient(135deg, #212529 0%, #495057 50%, #dc3545 100%);
+}
+
+.stat-box {
+    background: #fff;
+    transition: transform 0.2s;
+}
+
+.stat-box:hover {
+    transform: translateY(-4px);
+}
+
+.food-card {
+    transition: transform 0.2s, box-shadow 0.2s;
+    border: none;
+}
+
+.food-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12) !important;
+}
+
+.food-img {
+    height: 200px;
+    object-fit: cover;
+}
+
+.food-img-sm {
+    height: 120px;
+    object-fit: cover;
+}
+
+.food-detail-img {
+    max-height: 400px;
+    width: 100%;
+    object-fit: cover;
+}
+
+.cart-thumb {
+    width: 56px;
+    height: 56px;
+    object-fit: cover;
+}
+
+.price-tag {
+    color: var(--brand-red);
+    font-weight: 700;
+}
+
+.cart-badge {
+    position: absolute;
+    top: 0;
+    right: -8px;
+    font-size: 0.65rem;
+}
+
+.stat-card {
+    border: none;
+    border-radius: 12px;
+}
+
+.status-pending { background-color: #ffc107; color: #000; }
+.status-preparing { background-color: #0dcaf0; color: #000; }
+.status-delivered { background-color: #198754; }
+.status-cancelled { background-color: #6c757d; }
+
+.form-control:focus,
+.form-select:focus {
+    border-color: var(--brand-red);
+    box-shadow: 0 0 0 0.2rem rgba(220, 53, 69, 0.25);
+}
+
+@media (max-width: 576px) {
+    .hero-section h1 {
+        font-size: 2rem;
+    }
+
+    .food-img {
+        height: 160px;
+    }
+}

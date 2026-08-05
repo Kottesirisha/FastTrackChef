@@ -1,0 +1,98 @@
+{% extends "base.html" %}
+{% block title %}Admin Dashboard - FastTrackChef{% endblock %}
+
+{% block content %}
+<h1 class="mb-4"><i class="bi bi-speedometer2"></i> Admin Dashboard</h1>
+
+<div class="row g-4 mb-4">
+    <div class="col-sm-6 col-xl-3">
+        <div class="card stat-card bg-primary text-white">
+            <div class="card-body">
+                <h6>Total Orders</h6>
+                <h2>{{ total_orders }}</h2>
+            </div>
+        </div>
+    </div>
+    <div class="col-sm-6 col-xl-3">
+        <div class="card stat-card bg-success text-white">
+            <div class="card-body">
+                <h6>Customers</h6>
+                <h2>{{ total_customers }}</h2>
+            </div>
+        </div>
+    </div>
+    <div class="col-sm-6 col-xl-3">
+        <div class="card stat-card bg-warning text-dark">
+            <div class="card-body">
+                <h6>Food Items</h6>
+                <h2>{{ total_foods }}</h2>
+            </div>
+        </div>
+    </div>
+    <div class="col-sm-6 col-xl-3">
+        <div class="card stat-card bg-danger text-white">
+            <div class="card-body">
+                <h6>Revenue</h6>
+                <h2>${{ "%.2f"|format(total_revenue) }}</h2>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row g-4 mb-4">
+    <div class="col-12">
+        <div class="d-flex flex-wrap gap-2">
+            <a href="{{ url_for('admin.manage_foods') }}" class="btn btn-dark"><i class="bi bi-egg-fried"></i> Manage Foods</a>
+            <a href="{{ url_for('admin.add_food') }}" class="btn btn-danger"><i class="bi bi-plus"></i> Add Food</a>
+            <a href="{{ url_for('admin.manage_categories') }}" class="btn btn-outline-dark"><i class="bi bi-grid"></i> Categories</a>
+            <a href="{{ url_for('admin.manage_customers') }}" class="btn btn-outline-dark"><i class="bi bi-people"></i> Customers</a>
+            <a href="{{ url_for('admin.manage_orders') }}" class="btn btn-outline-dark"><i class="bi bi-bag"></i> Orders
+                {% if pending_orders > 0 %}<span class="badge bg-danger">{{ pending_orders }}</span>{% endif %}
+            </a>
+        </div>
+    </div>
+</div>
+
+<div class="row g-4">
+    <div class="col-lg-7">
+        <div class="card shadow-sm">
+            <div class="card-header d-flex justify-content-between">
+                <span>Recent Orders</span>
+                <a href="{{ url_for('admin.manage_orders') }}">View All</a>
+            </div>
+            <div class="table-responsive">
+                <table class="table table-sm mb-0">
+                    <thead><tr><th>ID</th><th>Customer</th><th>Total</th><th>Status</th></tr></thead>
+                    <tbody>
+                        {% for order in recent_orders %}
+                        <tr>
+                            <td><a href="{{ url_for('admin.order_detail', order_id=order.id) }}">#{{ order.id }}</a></td>
+                            <td>{{ order.user.name }}</td>
+                            <td>${{ "%.2f"|format(order.total_amount) }}</td>
+                            <td><span class="badge status-{{ order.status }}">{{ order.status }}</span></td>
+                        </tr>
+                        {% else %}
+                        <tr><td colspan="4" class="text-muted text-center">No orders yet</td></tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+    <div class="col-lg-5">
+        <div class="card shadow-sm">
+            <div class="card-header">Popular Foods</div>
+            <ul class="list-group list-group-flush">
+                {% for food in popular_foods %}
+                <li class="list-group-item d-flex justify-content-between">
+                    <span>{{ food.name }}</span>
+                    <span class="badge bg-secondary">{{ food.popularity }} orders</span>
+                </li>
+                {% else %}
+                <li class="list-group-item text-muted">No data yet</li>
+                {% endfor %}
+            </ul>
+        </div>
+    </div>
+</div>
+{% endblock %}

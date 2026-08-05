@@ -1,0 +1,49 @@
+{% extends "base.html" %}
+{% block title %}Edit Food - FastTrackChef{% endblock %}
+
+{% block content %}
+<h1 class="mb-4">Edit: {{ food.name }}</h1>
+<div class="row g-4">
+    <div class="col-lg-4">
+        <img src="{{ url_for('static', filename=food.image_url) }}" class="img-fluid rounded shadow" alt="">
+    </div>
+    <div class="col-lg-7">
+        <div class="card shadow-sm">
+            <div class="card-body">
+                <form method="POST" enctype="multipart/form-data" novalidate>
+                    {{ form.hidden_tag() }}
+                    <div class="mb-3">
+                        {{ form.name.label(class="form-label") }}
+                        {{ form.name(class="form-control") }}
+                    </div>
+                    <div class="mb-3">
+                        {{ form.description.label(class="form-label") }}
+                        {{ form.description(class="form-control", rows=3) }}
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6 mb-3">
+                            {{ form.price.label(class="form-label") }}
+                            {{ form.price(class="form-control") }}
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            {{ form.category_id.label(class="form-label") }}
+                            {{ form.category_id(class="form-select") }}
+                        </div>
+                    </div>
+                    <div class="mb-3">
+                        {{ form.image.label(class="form-label") }}
+                        {{ form.image(class="form-control") }}
+                        <small class="text-muted">Leave empty to keep current image</small>
+                    </div>
+                    <div class="mb-3 form-check">
+                        {{ form.available(class="form-check-input") }}
+                        {{ form.available.label(class="form-check-label") }}
+                    </div>
+                    {{ form.submit(class="btn btn-danger") }}
+                    <a href="{{ url_for('admin.manage_foods') }}" class="btn btn-outline-secondary ms-2">Cancel</a>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

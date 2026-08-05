@@ -1,0 +1,14 @@
+{% extends "base.html" %}
+{% block title %}Edit Category - FastTrackChef{% endblock %}
+{% block content %}
+<h1 class="mb-4">Edit Category: {{ category.name }}</h1>
+<div class="col-lg-6">
+    <form method="POST" class="card shadow-sm p-4">
+        {{ form.hidden_tag() }}
+        <div class="mb-3">{{ form.name.label(class="form-label") }}{{ form.name(class="form-control") }}</div>
+        <div class="mb-3">{{ form.description.label(class="form-label") }}{{ form.description(class="form-control", rows=3) }}</div>
+        {{ form.submit(class="btn btn-danger") }}
+        <a href="{{ url_for('admin.manage_categories') }}" class="btn btn-outline-secondary ms-2">Cancel</a>
+    </form>
+</div>
+{% endblock %}

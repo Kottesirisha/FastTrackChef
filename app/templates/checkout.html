@@ -1,0 +1,42 @@
+{% extends "base.html" %}
+{% block title %}Checkout - FastTrackChef{% endblock %}
+
+{% block content %}
+<h1 class="mb-4"><i class="bi bi-credit-card"></i> Checkout</h1>
+
+<div class="row g-4">
+    <div class="col-lg-8">
+        <div class="card shadow-sm">
+            <div class="card-header bg-dark text-white">Order Summary</div>
+            <ul class="list-group list-group-flush">
+                {% for entry in cart_items %}
+                <li class="list-group-item d-flex justify-content-between">
+                    <span>{{ entry.food.name }} x {{ entry.item.quantity }}</span>
+                    <span>${{ "%.2f"|format(entry.subtotal) }}</span>
+                </li>
+                {% endfor %}
+            </ul>
+        </div>
+    </div>
+    <div class="col-lg-4">
+        <div class="card shadow-sm">
+            <div class="card-body">
+                <h5>Delivery Info</h5>
+                <p class="mb-1"><strong>{{ current_user.name }}</strong></p>
+                <p class="text-muted small mb-1">{{ current_user.email }}</p>
+                <p class="text-muted small">{{ current_user.phone or 'No phone' }}</p>
+                <p class="text-muted small">{{ current_user.address or 'No address on file' }}</p>
+                <hr>
+                <div class="d-flex justify-content-between">
+                    <strong>Total</strong>
+                    <strong class="price-tag">${{ "%.2f"|format(total) }}</strong>
+                </div>
+                <form method="POST" class="mt-3">
+                    <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+                    <button type="submit" class="btn btn-danger w-100">Place Order</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

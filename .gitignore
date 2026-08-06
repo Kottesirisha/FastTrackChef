@@ -11,7 +11,7 @@ ENV/
 
 # Flask
 instance/
-*.db
+!fasttrackchef.db
 
 # Environment
 .env

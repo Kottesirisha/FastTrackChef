@@ -8,7 +8,7 @@ A full-stack Flask food ordering web application with customer and admin portals
 
 **GitHub Repository:** https://github.com/naren2023/FastTrackChef
 
----
+--
 
 ## ✨ Features
 

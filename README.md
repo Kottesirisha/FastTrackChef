@@ -159,7 +159,7 @@ GET /api/categories
 
 MIT License
 
----
+--
 
 ## 👨‍💻 Author
 
